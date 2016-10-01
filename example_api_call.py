@@ -79,7 +79,7 @@ exampleNetworkData = {
 }
 
 #Create a network
-r = requests.post('https://www.polinode.com/api/v1/networks', auth=(username, password), data = {'name': 'My new network', 'status': 'Public', 'isDirected': 'true', 'description': 'An example network created via the Polinode API'}) #name is required, status is optinal and defaults to public, isDirected is optional and defaults to true, description is optional and defautls to no description.
+r = requests.post('https://www.polinode.com/api/v1/networks', auth=(username, password), data = {'name': 'My new network', 'status': 'Public', 'fileType': 'JSON', 'originalFileType': 'JSON', 'isDirected': 'true', 'description': 'An example network created via the Polinode API'}) #name is required, status is optinal and defaults to public, fileType is optional and defaults to JSON, originalFileType is optional and defaults to Excel, isDirected is optional and defaults to true, description is optional and defautls to no description.
 network = r.json()
 networkId = network['_id']
 print('Summary of network created:')
@@ -116,3 +116,13 @@ r = requests.delete('https://www.polinode.com/api/v1/networks/' + networkId, aut
 network = r.json()
 print('Network deleted')
 pprint.pprint(network, indent=2)
+
+#Load a GEXF file and upload it as a network
+f = open('./diseasome.gexf', 'r')
+data = f.read()
+print(data)
+r = requests.post('https://www.polinode.com/api/v1/networks', auth=(username, password), data = {'name': 'My new GEXF network', 'status': 'Public', 'fileType': 'GEXF', 'originalFileType': 'GEXF', 'isDirected': 'false', 'description': 'The human disease network. See Human Disease Network, Goh K-I, Cusick ME, Valle D, Childs B, Vidal M, Barabási A-L (2007), Proc Natl Acad Sci USA 104:8685-8690'}) #name is required, status is optinal and defaults to public, fileType is optional and defaults to JSON, originalFileType is optional and defaults to Excel, isDirected is optional and defaults to true, description is optional and defautls to no description.
+network = r.json()
+print('Summary of GEXF network created:')
+pprint.pprint(network, indent=2)
+r = requests.put(network['AWSURL'], data=data, headers={'Content-Type': 'application/json; charset=UTF-8'})
