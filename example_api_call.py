@@ -87,12 +87,14 @@ pprint.pprint(network, indent=2)
 r = requests.put(network['AWSURL'], data=json.dumps(exampleNetworkData), headers={'Content-Type': 'application/json; charset=UTF-8'})
 
 #Edit the network we just created. We will change the name of the network and change one attribute value
-r = requests.put('https://www.polinode.com/api/v1/networks/' + networkId, auth=(username, password), data = {'name': 'My new network after edits'})
+r = requests.put('https://www.polinode.com/api/v1/networks/URLForUpdate/' + networkId, auth=(username, password))
+newNetworkUUID = r.json()['networkUUID']
+exampleNetworkData['nodes'][0]['attributes']['Example Numerical Attribute Name'] = 25;
+r = requests.put(r.json()['AWSURL'], data=json.dumps(exampleNetworkData), headers={'Content-Type': 'application/json; charset=UTF-8'})
+r = requests.put('https://www.polinode.com/api/v1/networks/' + networkId, auth=(username, password), data = {'name': 'My new network after edits', 'networkUUID': newNetworkUUID})
 network = r.json()
 print('Summary of updated network:')
 pprint.pprint(network, indent=2)
-exampleNetworkData['nodes'][0]['attributes']['Example Numerical Attribute Name'] = 25;
-r = requests.put(network['AWSURL'], data=json.dumps(exampleNetworkData), headers={'Content-Type': 'application/json; charset=UTF-8'})
 
 #Example of retrieving a summary of all networks for a user
 r = requests.get('https://www.polinode.com/api/v1/networks', auth=(username, password))
