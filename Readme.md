@@ -7,4 +7,4 @@ This repository contains a short Python script to demonstrate the use of Polinod
 
 To run the script make sure you have Python 3 installed then use 'pip install -r requirements.txt' followed by 'python example_api_call.py'.
 
-Documentation for the API can be found [here](https://docs.google.com/document/d/1r7W9RR9oIKKcxou4-D8wyio3FqQ2a7cic7faz3PSa5g).
+Documentation for the API can be found [here](https://docs.google.com/document/d/1VPtSzuIQQWCa7v-sPob9M4SwyJLyWtag8lVJLFiXbaI/edit).
